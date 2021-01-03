@@ -18,6 +18,12 @@
     "https://twitchemotes.com/*"
   ],
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "forkedYTG@mxr"
+    }
+  },
+
   "options_ui": {
     "page": "html/options.html",
     "chrome_style": true
