@@ -63,3 +63,6 @@ build/
 
 # build zips
 build-*.zip
+build.pem
+build.zip
+build.crx
