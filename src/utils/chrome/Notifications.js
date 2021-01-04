@@ -1,3 +1,5 @@
+const isFirefox = !chrome.app;
+
 class Notifications {
   create(notificationId = null, options) {
     // notificationId is optional
@@ -6,44 +8,64 @@ class Notifications {
       notificationId = null;
     }
 
-    return new Promise((res, rej) => {
-      // resolve args = notificationId:string
-      if (chrome.notifications)
+    if(!isFirefox) {
+      return new Promise((res, rej) => {
+        // resolve args = notificationId:string
         chrome.notifications.create(notificationId, options, res);
-      else return browser.notifications.create(notificationId, options);
-    });
+      });
+    } else {
+      return browser.notifications.create(notificationId, options);
+    }
+    
   }
 
   update(notificationId, options) {
-    return new Promise((res, rej) => {
-      // resolve args = wasUpdated:boolean
-      if (chrome.notifications)
+    if(!isFirefox) {
+      return new Promise((res, rej) => {
+        // resolve args = wasUpdated:boolean
         chrome.notifications.update(notificationId, options, res);
-      else return browser.notifications.update(notificationId, options);
-    });
+      });
+    } else {
+      return browser.notifications.update(notificationId, options);
+    }
   }
 
   clear(notificationId) {
-    return new Promise((res, rej) => {
-      // resolve args = wasCleared:boolean
-      if (chrome.notifications) chrome.notifications.clear(notificationId, res);
-      else return chrome.notifications.clear(notificationId);
-    });
+    if(!isFirefox) {
+      return new Promise((res, rej) => {
+        // resolve args = wasCleared:boolean
+        chrome.notifications.clear(notificationId, res);
+      });
+    } else {
+      return browser.notifications.clear(notificationId);
+    }
+    
   }
 
   getAll() {
-    return new Promise((res, rej) => {
-      // resolve args = notifications:object
-      if (chrome.notifications) chrome.notifications.getAll(res);
-      else return browser.notifications.getAll(res);
-    });
+    if(!isFirefox) {
+      return new Promise((res, rej) => {
+        // resolve args = notifications:object
+        chrome.notifications.getAll(res);
+      });
+    } else {
+      return browser.notifications.getAll();
+    }
   }
 
   getPermissionLevel() {
-    return new Promise((res, rej) => {
-      // resolve args = level:PermissionLevel (https://developer.chrome.com/apps/notifications#type-PermissionLevel)
-      if (chrome.notifications) chrome.notifications.getPermissionLevel(res);
-    });
+
+    if(!isFirefox) {
+      return new Promise((res, rej) => {
+        // resolve args = level:PermissionLevel (https://developer.chrome.com/apps/notifications#type-PermissionLevel)
+        chrome.notifications.getPermissionLevel(res);
+      });
+    } else {
+      return new Promise((res, rej) => {
+        res = 'denied';
+      });
+    }
+    
   }
 
   listen(event, notificationId = null, callback) {
