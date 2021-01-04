@@ -18,7 +18,8 @@ const setupComplete = () => {
 
   let closeCountdown = 5; // seconds
   const closeTimeout = () => {
-    successCloseMessageCountdown.innerHTML = closeCountdown;
+    successCloseMessageCountdown.innerHTML = '&nbsp;';
+    successCloseMessageCountdown.append(closeCountdown);
     setTimeout(() => {
       if(closeCountdown > 1) {
         closeCountdown -= 1;
@@ -31,7 +32,7 @@ const setupComplete = () => {
     }, 1000);
   }
 
-  successCloseMessageCountdown.innerHTML = closeCountdown;
+  successCloseMessageCountdown.append(closeCountdown);
   closeTimeout();
 }
 
