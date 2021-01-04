@@ -38,16 +38,20 @@ module.exports = {
   },
 
   plugins: [
-    new CopyPlugin([
-      'manifest.json',
-      'html/**/*',
-      'assets/**/*'
-    ], {
-      ignore: [
-        '**/*.psd'
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(srcPath, 'html'), to: path.join(distPath, 'html')},
+        { from: path.join(srcPath, 'assets'), to: path.join(distPath, 'assets'),
+          globOptions: {
+            ignore: [
+              '**/*.psd'
+            ]
+          }
+        },
+        { from: path.join(srcPath, 'manifest.json'), to: path.join(distPath, 'manifest.json')}
       ]
     })
   ],
 
-  devtool: '#inline-cheap-source-map'
+  devtool: 'inline-cheap-source-map'
 }

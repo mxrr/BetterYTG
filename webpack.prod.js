@@ -1,10 +1,10 @@
 // Packages
 const webpack = require('webpack'),
+      TerserPlugin = require('terser-webpack-plugin'),
       path = require('path');
 
 // Webpack Plugins
-const CopyPlugin = require('copy-webpack-plugin'),
-      UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin')
 
 // Paths
 const srcPath = path.join(__dirname, 'src'),
@@ -32,6 +32,15 @@ module.exports = {
     filename: './[name].js'
   },
 
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,  
+        exclude: /node_modules/ 
+      })
+    ]
+  },
+
   module: {
     rules: [
       { test: /\.styl$/, use: ['style-loader', 'css-loader', 'stylus-loader'], exclude: /node_modules/ }
@@ -39,26 +48,21 @@ module.exports = {
   },
 
   plugins: [
-    new CopyPlugin([
-      'manifest.json',
-      'html/**/*',
-      'assets/**/*',
-      '../LICENSE'
-    ], {
-      ignore: [
-        '**/*.psd'
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(srcPath, 'html'), to: path.join(distPath, 'html')},
+        { from: path.join(srcPath, 'assets'), to: path.join(distPath, 'assets'),
+          globOptions: {
+            ignore: [
+              '**/*.psd'
+            ]
+          }
+        },
+        { from: path.join(srcPath, 'manifest.json'), to: path.join(distPath, 'manifest.json')},
+        { from: path.join(srcPath, '../LICENSE'), to: distPath }
       ]
-    }),
-
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        output: {
-          beautify: false,
-          comments: false
-        }
-      }
     })
   ],
 
-  devtool: '#inline-cheap-source-map'
+  devtool: 'inline-cheap-source-map'
 }
