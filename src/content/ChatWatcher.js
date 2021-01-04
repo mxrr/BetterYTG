@@ -1,6 +1,8 @@
 import Emotes from "./Emotes";
 import Message from "./Message";
 
+import PersistentSyncStorage from "src/helpers/PersistentSyncStorage";
+
 class ChatWatcher {
   constructor() {
     this.watchChat = this.watchChat.bind(this);
@@ -18,6 +20,14 @@ class ChatWatcher {
         .then(() => {
           this.watchChat();
           this.parsePreloadedMessages();
+
+          if(PersistentSyncStorage.data.options["liveChatByDefault"]) {
+            const viewButton = document.querySelector(".dropdown-trigger");
+            viewButton.click();
+
+            const liveChat = document.querySelector("#contentWrapper").children[0].children[0].children[1];
+            liveChat.click();
+          }
         });
     });
   }

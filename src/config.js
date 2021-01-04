@@ -7,6 +7,7 @@ const CONFIG = {
     // Chat Options
     enableChatColors: true,
     separateChatLines: false,
+    liveChatByDefault: true,
 
     // Site Options
     enableYoutubeGaming: true,
