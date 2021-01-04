@@ -3,7 +3,7 @@
 
   "name": "Forked YouTube Gaming",
   "short_name": "ForkYTG",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "ForkedYTG enhances YouTube Gaming Livestream's with more emotes (Twitch, BTTV Emotes), new features, and more.",
   "icons": {
     "16": "assets/icons/BetterYTG_red_16.png",
