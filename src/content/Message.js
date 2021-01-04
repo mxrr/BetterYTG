@@ -86,7 +86,7 @@ class Message {
   }
 
   setHtml() {
-    this.textNode.node.textContent = this.parsedText;
+    this.textNode.node.innerHTML = this.parsedText;
   }
 
   setAuthorColor() {
